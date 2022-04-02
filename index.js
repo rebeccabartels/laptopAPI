@@ -6,70 +6,272 @@ const app = express()
 
 const newspapers = [
     {
-        name: 'cityam',
-        address: 'https://www.cityam.com/london-must-become-a-world-leader-on-climate-change-action/',
-        base: ''
+        name: 'mashable',
+        address: 'https://mashable.com/category/tech-industry',
+        base: 'https://mashable.com/tech'
     },
     {
-        name: 'thetimes',
-        address: 'https://www.thetimes.co.uk/environment/climate-change',
-        base: ''
+        name: 'vpnmentor',
+        address: 'https://www.vpnmentor.com/blog/best-no-log-vpns/',
+        base: 'https://www.vpnmentor.com'
     },
     {
-        name: 'guardian',
-        address: 'https://www.theguardian.com/environment/climate-crisis',
-        base: '',
+        name: 'zdnet',
+        address: 'https://www.zdnet.com/',
+        base: 'https://www.zdnet.com'
     },
     {
-        name: 'telegraph',
-        address: 'https://www.telegraph.co.uk/climate-change',
-        base: 'https://www.telegraph.co.uk',
+        name: 'pcmag',
+        address: 'https://www.pcmag.com/',
+        base: 'https://www.pcmag.com'
     },
     {
-        name: 'nyt',
-        address: 'https://www.nytimes.com/international/section/climate',
-        base: '',
+        name: 'tomsguide',
+        address: 'https://www.tomsguide.com/',
+        base: 'https://www.tomsguide.com'
     },
     {
-        name: 'latimes',
-        address: 'https://www.latimes.com/environment',
-        base: '',
+        name: 'usnews',
+        address: 'https://www.usnews.com/',
+        base: 'https://www.usnews.com'
     },
     {
-        name: 'smh',
-        address: 'https://www.smh.com.au/environment/climate-change',
-        base: 'https://www.smh.com.au',
+        name: 'vpnranks',
+        address: 'https://www.vpnranks.com/',
+        base: 'https://www.vpnranks.com'
     },
     {
-        name: 'un',
-        address: 'https://www.un.org/climatechange',
-        base: '',
+        name: 'nytimes',
+        address: 'https://www.nytimes.com/',
+        base: 'https://www.nytimes.com'
     },
     {
-        name: 'bbc',
-        address: 'https://www.bbc.co.uk/news/science_and_environment',
-        base: 'https://www.bbc.co.uk',
+        name: 'techradar',
+        address: 'https://www.techradar.com/',
+        base: 'https://www.techradar.com/'
     },
     {
-        name: 'es',
-        address: 'https://www.standard.co.uk/topic/climate-change',
-        base: 'https://www.standard.co.uk'
+        name: 'knowtechie',
+        address: 'https://knowtechie.com/tag/security/',
+        base: 'https://knowtechie.com'
     },
     {
-        name: 'sun',
-        address: 'https://www.thesun.co.uk/topic/climate-change-environment/',
-        base: ''
+        name: 'extremetech',
+        address: 'https://www.extremetech.com/tag/security',
+        base: 'https://www.extremetech.com'
     },
     {
-        name: 'dm',
-        address: 'https://www.dailymail.co.uk/news/climate_change_global_warming/index.html',
-        base: ''
+        name: 'technewsworld',
+        address: 'https://www.technewsworld.com/section/security',
+        base: 'https://www.technewsworld.com'
     },
     {
-        name: 'nyp',
-        address: 'https://nypost.com/tag/climate-change/',
-        base: ''
-    }
+        name: 'gizmodo',
+        address: 'https://gizmodo.com/tech/privacy-and-security',
+        base: 'https://gizmodo.com'
+    },
+    {
+        name: 'lifehacker',
+        address: 'https://lifehacker.com/tech/privacy',
+        base: 'https://lifehacker.com/tech'
+    },
+    {
+        name: 'wired',
+        address: 'https://www.wired.com/category/security/',
+        base: 'https://www.wired.com'
+    },
+    {
+        name: 'arstechnica',
+        address: 'https://arstechnica.com/information-technology',
+        base: 'https://arstechnica.com'
+    },
+    {
+        name: 'hackernoon',
+        address: 'https://hackernoon.com/tagged/cybersecurity',
+        base: 'https://hackernoon.com'
+    },
+    {
+        name: 'techrepublic',
+        address: 'https://www.techrepublic.com/topic/security/',
+        base: 'https://www.techrepublic.com'
+    },
+    {
+        name: 'techradar',
+        address: 'https://www.techradar.com/',
+        base: 'https://www.techradar.com/'
+    },
+    {
+        name: 'androidcentral',
+        address: 'https://www.androidcentral.com',
+        base: 'https://www.androidcentral.com'
+    },
+    {
+        name: 'informationweek',
+        address: 'https://www.informationweek.com/security-and-risk-strategy',
+        base: 'https://www.informationweek.com'
+    },
+    {
+        name: 'siliconangle',
+        address: 'https://siliconangle.com/category/security',
+        base: 'https://siliconangle.com'
+    },
+    {
+        name: 'slashgear',
+        address: 'https://www.slashgear.com/category/technology',
+        base: 'https://www.slashgear.com'
+    },
+    {
+        name: 'theverge',
+        address: 'https://www.theverge.com/cyber-security',
+        base: 'https://www.theverge.com'
+    },
+    {
+        name: 'nakedsecrity',
+        address: 'https://nakedsecurity.sophos.com/',
+        base: 'https://nakedsecurity.sophos.com/'
+    },
+    {
+        name: 'jisaoftech',
+        address: 'https://www.jisasoftech.com',
+        base: 'https://www.jisasoftech.com/'
+    },
+    {
+        name: 'infosecurity-magazine',
+        address: 'https://www.infosecurity-magazine.com',
+        base: 'https://www.infosecurity-magazine.com'
+    },
+    {
+        name: 'nakedsecrity',
+        address: 'https://davinciforensics.co.za/cybersecurity/articles',
+        base: 'https://davinciforensics.co.za'
+    },
+ {
+        name: 'grahamcluley',
+        address: 'https://grahamcluley.com/',
+        base: 'https://grahamcluley.com/'
+    },
+    {
+        name: 'thehackernews',
+        address: 'https://thehackernews.com/',
+        base: 'https://thehackernews.com/'
+    },
+    {
+        name: 'lastwatchdog',
+        address: 'https://www.lastwatchdog.com/',
+        base: 'https://www.lastwatchdog.com/'
+    },{
+        name: 'insidecybersecurity',
+        address: 'https://insidecybersecurity.com/',
+        base: 'https://insidecybersecurity.com/'
+    },
+    {
+        name: 'bssi2',
+        address: 'https://www.bssi2.com/blog/',
+        base: 'https://www.bssi2.com/blog/'
+    },
+    {
+        name: 'cyberark',
+        address: 'https://www.cyberark.com/resources/blog',
+        base: 'https://www.cyberark.com'
+    },
+ {
+        name: 'schneier',
+        address: 'https://www.schneier.com/',
+        base: 'https://www.schneier.com/'
+    },
+    {
+        name: 'cnet',
+        address: 'https://www.cnet.com/tech/services-and-software/cybersecurity/',
+        base: 'https://www.cnet.com/tech/'
+    },
+    {
+        name: 'krebonsecurity',
+        address: 'https://krebsonsecurity.com/',
+        base: 'https://krebsonsecurity.com/'
+    }, {
+        name: 'bssi2',
+        address: 'https://www.bssi2.com/blog/',
+        base: 'https://www.bssi2.com/blog/'
+    },
+    {
+        name: 'cyberark',
+        address: 'https://www.cyberark.com/resources/blog',
+        base: 'https://www.cyberark.com'
+    },
+ {
+        name: 'schneier',
+        address: 'https://www.schneier.com/',
+        base: 'https://www.schneier.com/'
+    },
+    {
+        name: 'cnet',
+        address: 'https://www.cnet.com/tech/services-and-software/cybersecurity/',
+        base: 'https://www.cnet.com/tech/'
+    },
+    {
+        name: 'bhconsulting',
+        address: 'https://bhconsulting.ie/securitywatchblog/',
+        base: 'https://bhconsulting.ie'
+    }, {
+        name: 'eff',
+        address: 'https://www.eff.org/deeplinks',
+        base: 'https://www.eff.org/deeplinks'
+    }, {
+        name: 'homelandsecuritynews',
+        address: 'https://www.homelandsecuritynewswire.com/topics/cybersecurity',
+        base: 'https://www.homelandsecuritynewswire.com'
+    },
+    {
+        name: 'itportal',
+        address: 'https://www.itproportal.com/security/',
+        base: 'https://www.itproportal.com/'
+    },
+ {
+        name: 'lawfareblog',
+        address: 'https://www.lawfareblog.com/topic/cybersecurity',
+        base: 'https://www.lawfareblog.com'
+    },
+    {
+        name: 'rapid7',
+        address: 'https://www.rapid7.com/blog/',
+        base: 'https://www.rapid7.com'
+    },
+    {
+        name: 'theguardian',
+        address: 'https://www.theguardian.com/technology/data-computer-security',
+        base: 'https://www.theguardian.com/technology/'
+    },
+ {
+        name: 'gbhackers',
+        address: 'https://gbhackers.com/',
+        base: 'https://gbhackers.com/'
+    },
+ {
+        name: 'vice',
+        address: 'https://www.vice.com/en/section/tech',
+        base: 'https://www.vice.com/en/'
+    },
+    {
+        name: 'redscan',
+        address: 'https://www.redscan.com/news/',
+        base: 'https://www.redscan.com/news/'
+    },
+    {
+        name: 'theguardian',
+        address: 'https://www.theguardian.com/technology/data-computer-security',
+        base: 'https://www.theguardian.com/technology/'
+    },
+    {
+        name: 'rapid7',
+        address: 'https://www.rapid7.com/blog/',
+        base: 'https://www.rapid7.com'
+    },
+    {
+        name: 'theguardian',
+        address: 'https://www.theguardian.com/technology/data-computer-security',
+        base: 'https://www.theguardian.com/technology/'
+    },
+    
 ]
 
 const articles = []
@@ -80,7 +282,7 @@ newspapers.forEach(newspaper => {
             const html = response.data
             const $ = cheerio.load(html)
 
-            $('a:contains("climate")', html).each(function () {
+            $('a:contains("cyber")', html).each(function () {
                 const title = $(this).text()
                 const url = $(this).attr('href')
 
@@ -95,7 +297,7 @@ newspapers.forEach(newspaper => {
 })
 
 app.get('/', (req, res) => {
-    res.json('Welcome to my Climate Change News API')
+    res.json('Welcome to my News API')
 })
 
 app.get('/news', (req, res) => {
