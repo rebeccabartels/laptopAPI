@@ -4,292 +4,24 @@ const axios = require('axios')
 const cheerio = require('cheerio')
 const app = express()
 
-const newspapers = [
-    {
-        name: 'mashable',
-        address: 'https://mashable.com/category/tech-industry',
-        base: 'https://mashable.com/tech'
-    },
-    {
-        name: 'vpnmentor',
-        address: 'https://www.vpnmentor.com/blog/best-no-log-vpns/',
-        base: 'https://www.vpnmentor.com'
-    },
-    {
-        name: 'zdnet',
-        address: 'https://www.zdnet.com/',
-        base: 'https://www.zdnet.com'
-    },
-    {
-        name: 'pcmag',
-        address: 'https://www.pcmag.com/',
-        base: 'https://www.pcmag.com'
-    },
-    {
-        name: 'tomsguide',
-        address: 'https://www.tomsguide.com/',
-        base: 'https://www.tomsguide.com'
-    },
-    {
-        name: 'usnews',
-        address: 'https://www.usnews.com/',
-        base: 'https://www.usnews.com'
-    },
-    {
-        name: 'vpnranks',
-        address: 'https://www.vpnranks.com/',
-        base: 'https://www.vpnranks.com'
-    },
-    {
-        name: 'nytimes',
-        address: 'https://www.nytimes.com/',
-        base: 'https://www.nytimes.com'
-    },
-    {
-        name: 'techradar',
-        address: 'https://www.techradar.com/',
-        base: 'https://www.techradar.com/'
-    },
-    {
-        name: 'knowtechie',
-        address: 'https://knowtechie.com/tag/security/',
-        base: 'https://knowtechie.com'
-    },
-    {
-        name: 'extremetech',
-        address: 'https://www.extremetech.com/tag/security',
-        base: 'https://www.extremetech.com'
-    },
-    {
-        name: 'technewsworld',
-        address: 'https://www.technewsworld.com/section/security',
-        base: 'https://www.technewsworld.com'
-    },
-    {
-        name: 'gizmodo',
-        address: 'https://gizmodo.com/tech/privacy-and-security',
-        base: 'https://gizmodo.com'
-    },
-    {
-        name: 'lifehacker',
-        address: 'https://lifehacker.com/tech/privacy',
-        base: 'https://lifehacker.com/tech'
-    },
-    {
-        name: 'wired',
-        address: 'https://www.wired.com/category/security/',
-        base: 'https://www.wired.com'
-    },
-    {
-        name: 'arstechnica',
-        address: 'https://arstechnica.com/information-technology',
-        base: 'https://arstechnica.com'
-    },
-    {
-        name: 'hackernoon',
-        address: 'https://hackernoon.com/tagged/cybersecurity',
-        base: 'https://hackernoon.com'
-    },
-    {
-        name: 'techrepublic',
-        address: 'https://www.techrepublic.com/topic/security/',
-        base: 'https://www.techrepublic.com'
-    },
-    {
-        name: 'techradar',
-        address: 'https://www.techradar.com/',
-        base: 'https://www.techradar.com/'
-    },
-    {
-        name: 'androidcentral',
-        address: 'https://www.androidcentral.com',
-        base: 'https://www.androidcentral.com'
-    },
-    {
-        name: 'informationweek',
-        address: 'https://www.informationweek.com/security-and-risk-strategy',
-        base: 'https://www.informationweek.com'
-    },
-    {
-        name: 'siliconangle',
-        address: 'https://siliconangle.com/category/security',
-        base: 'https://siliconangle.com'
-    },
-    {
-        name: 'slashgear',
-        address: 'https://www.slashgear.com/category/technology',
-        base: 'https://www.slashgear.com'
-    },
-    {
-        name: 'theverge',
-        address: 'https://www.theverge.com/cyber-security',
-        base: 'https://www.theverge.com'
-    },
-    {
-        name: 'nakedsecrity',
-        address: 'https://nakedsecurity.sophos.com/',
-        base: 'https://nakedsecurity.sophos.com/'
-    },
-    {
-        name: 'jisaoftech',
-        address: 'https://www.jisasoftech.com',
-        base: 'https://www.jisasoftech.com/'
-    },
-    {
-        name: 'infosecurity-magazine',
-        address: 'https://www.infosecurity-magazine.com',
-        base: 'https://www.infosecurity-magazine.com'
-    },
-    {
-        name: 'nakedsecrity',
-        address: 'https://davinciforensics.co.za/cybersecurity/articles',
-        base: 'https://davinciforensics.co.za'
-    },
- {
-        name: 'grahamcluley',
-        address: 'https://grahamcluley.com/',
-        base: 'https://grahamcluley.com/'
-    },
-    {
-        name: 'thehackernews',
-        address: 'https://thehackernews.com/',
-        base: 'https://thehackernews.com/'
-    },
-    {
-        name: 'lastwatchdog',
-        address: 'https://www.lastwatchdog.com/',
-        base: 'https://www.lastwatchdog.com/'
-    },{
-        name: 'insidecybersecurity',
-        address: 'https://insidecybersecurity.com/',
-        base: 'https://insidecybersecurity.com/'
-    },
-    {
-        name: 'bssi2',
-        address: 'https://www.bssi2.com/blog/',
-        base: 'https://www.bssi2.com/blog/'
-    },
-    {
-        name: 'cyberark',
-        address: 'https://www.cyberark.com/resources/blog',
-        base: 'https://www.cyberark.com'
-    },
- {
-        name: 'schneier',
-        address: 'https://www.schneier.com/',
-        base: 'https://www.schneier.com/'
-    },
-    {
-        name: 'cnet',
-        address: 'https://www.cnet.com/tech/services-and-software/cybersecurity/',
-        base: 'https://www.cnet.com/tech/'
-    },
-    {
-        name: 'krebonsecurity',
-        address: 'https://krebsonsecurity.com/',
-        base: 'https://krebsonsecurity.com/'
-    }, {
-        name: 'bssi2',
-        address: 'https://www.bssi2.com/blog/',
-        base: 'https://www.bssi2.com/blog/'
-    },
-    {
-        name: 'cyberark',
-        address: 'https://www.cyberark.com/resources/blog',
-        base: 'https://www.cyberark.com'
-    },
- {
-        name: 'schneier',
-        address: 'https://www.schneier.com/',
-        base: 'https://www.schneier.com/'
-    },
-    {
-        name: 'cnet',
-        address: 'https://www.cnet.com/tech/services-and-software/cybersecurity/',
-        base: 'https://www.cnet.com/tech/'
-    },
-    {
-        name: 'bhconsulting',
-        address: 'https://bhconsulting.ie/securitywatchblog/',
-        base: 'https://bhconsulting.ie'
-    }, {
-        name: 'eff',
-        address: 'https://www.eff.org/deeplinks',
-        base: 'https://www.eff.org/deeplinks'
-    }, {
-        name: 'homelandsecuritynews',
-        address: 'https://www.homelandsecuritynewswire.com/topics/cybersecurity',
-        base: 'https://www.homelandsecuritynewswire.com'
-    },
-    {
-        name: 'itportal',
-        address: 'https://www.itproportal.com/security/',
-        base: 'https://www.itproportal.com/'
-    },
- {
-        name: 'lawfareblog',
-        address: 'https://www.lawfareblog.com/topic/cybersecurity',
-        base: 'https://www.lawfareblog.com'
-    },
-    {
-        name: 'rapid7',
-        address: 'https://www.rapid7.com/blog/',
-        base: 'https://www.rapid7.com'
-    },
-    {
-        name: 'theguardian',
-        address: 'https://www.theguardian.com/technology/data-computer-security',
-        base: 'https://www.theguardian.com/technology/'
-    },
- {
-        name: 'gbhackers',
-        address: 'https://gbhackers.com/',
-        base: 'https://gbhackers.com/'
-    },
- {
-        name: 'vice',
-        address: 'https://www.vice.com/en/section/tech',
-        base: 'https://www.vice.com/en/'
-    },
-    {
-        name: 'redscan',
-        address: 'https://www.redscan.com/news/',
-        base: 'https://www.redscan.com/news/'
-    },
-    {
-        name: 'theguardian',
-        address: 'https://www.theguardian.com/technology/data-computer-security',
-        base: 'https://www.theguardian.com/technology/'
-    },
-    {
-        name: 'rapid7',
-        address: 'https://www.rapid7.com/blog/',
-        base: 'https://www.rapid7.com'
-    },
-    {
-        name: 'theguardian',
-        address: 'https://www.theguardian.com/technology/data-computer-security',
-        base: 'https://www.theguardian.com/technology/'
-    },
-    
-]
+const shops = ["https://www.newegg.com/Computer-Systems/Store/ID-3","https://www.bestbuy.com/site/computers-pcs/laptop-computers","https://www.lenovo.com/","https://www.pricegrabber.com","https://www.hp.com/","https://www.dell.com/","https://www.apple.com/","https://www.asus.com/us/","https://www.acer.com/ac/en/US/content/home","https://agbstech.com/","https://www.dell.com/en-us/gaming/alienware","https://www.bmaxit.com/en/","https://www.boxx.com/","https://www.casper.com.tr/","https://www.clevo.com.tw/index-en.asp","https://www.cyberpowerpc.com/","https://www.digitalstorm.com/","https://www.durabook.com/us/","https://us.dynabook.com/","https://www.eluktronics.com/","https://frame.work/","https://www.fujitsu.com/global/products/computing/pc/notebooks/","https://www.gatewayusa.com/","https://geo-computers.com/","https://us.starlabs.systems/pages/starbook","https://eurocom.com/ec/main()ec","https://www.falcon-nw.com/","https://www.getac.com/us/products/laptops/","https://www.gigabyte.com/us/Laptop","https://www.hihonor.com/global/laptops/","https://www.consumer.huawei.com/en/laptops/","https://www.hyundaitechnology.com/collections/notebooks","https://www.illegear.com/shop/10-illegear-laptops","https://www.lavamobiles.com/laptops","https://www.lg.com/us/laptops","https://www.global.machenike.com/","http://www.maguay.ro/","https://www.nokia.com/shop/laptops/","https://www.medion.com/us/products/laptops.php","https://www.metabox.com.au/","https://www.us.msi.com/","https://www.obsidian-pc.com/","https://www.optimacomputerbd.com/","https://www.originpc.com/gaming/laptops/","https://www.opowered.com/laptops/","https://www.na.panasonic.com/us/computers-tablets-handhelds/computers","https://www.packardbell.com/pb/en/IL/content/notebook","https://www.puri.sm/","https://www.razer.com/pc","https://www.sagernotebook.com/Best-Gaming-Laptop/","https://www.samsung.com/us/computing/","http://www.en.jumper.com.cn/en/index.aspx","https://www.system76.com/laptops","https://www.velocitymicro.com/gaming-laptops.php","https://www.tuxedocomputers.com/en/Linux-Hardware/Linux-Notebooks.tuxedo","https://www.zeuslap.com/","http://www.xolo.in/laptops/chrome-book","https://www.waltonbd.com/laptop"]
 
-const articles = []
+const laptops = []
 
-newspapers.forEach(newspaper => {
-    axios.get(newspaper.address)
+laptops.forEach(laptop => {
+    axios.get(laptop.address)
         .then(response => {
             const html = response.data
             const $ = cheerio.load(html)
 
-            $('a:contains("cyber")', html).each(function () {
+            $('a:contains("laptop")', html).each(function () {
                 const title = $(this).text()
                 const url = $(this).attr('href')
 
-                articles.push({
+                shops.push({
                     title,
-                    url: newspaper.base + url,
-                    source: newspaper.name
+                    url: laptop.base + url,
+                    source: laptop.name
                 })
             })
 
@@ -300,33 +32,33 @@ app.get('/', (req, res) => {
     res.json('Welcome to my News API')
 })
 
-app.get('/news', (req, res) => {
-    res.json(articles)
+app.get('/laptops', (req, res) => {
+    res.json(shops)
 })
 
-app.get('/news/:newspaperId', (req, res) => {
-    const newspaperId = req.params.newspaperId
+app.get('/laptops/:laptopId', (req, res) => {
+    const laptopId = req.params.laptopId
 
-    const newspaperAddress = newspapers.filter(newspaper => newspaper.name == newspaperId)[0].address
-    const newspaperBase = newspapers.filter(newspaper => newspaper.name == newspaperId)[0].base
+    const laptopAddress = laptops.filter(laptop => laptop.name == laptopId)[0].address
+    const VendorLink = laptops.filter(laptop => laptop.name == laptopId)[0].base
 
 
-    axios.get(newspaperAddress)
+    axios.get(laptopAddress)
         .then(response => {
             const html = response.data
             const $ = cheerio.load(html)
-            const specificArticles = []
+            const specificShop = []
 
-            $('a:contains("climate")', html).each(function () {
-                const title = $(this).text()
+            $('a:contains("name")', html).each(function () {
+                const model = $(this).text()
                 const url = $(this).attr('href')
-                specificArticles.push({
-                    title,
-                    url: newspaperBase + url,
-                    source: newspaperId
+                specificShop.push({
+                    model,
+                    url: VendorLink + url,
+                    source: laptopId
                 })
             })
-            res.json(specificArticles)
+            res.json(specificShop)
         }).catch(err => console.log(err))
 })
 
