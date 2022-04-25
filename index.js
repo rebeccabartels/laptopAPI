@@ -5,7 +5,7 @@ const axios = require('axios')
 const cheerio = require('cheerio')
 const app = express()
 
-const newspapers = [
+const vendors = [
     {
         name: 'puri',
         address: 'https://www.puri.sm/',
@@ -13,10 +13,10 @@ const newspapers = [
     },
 ]
 
-const articles = []
+const laptops = []
 
-newspapers.forEach(newspaper => {
-    axios.get(newspaper.address)
+vendors.forEach(vendor => {
+    axios.get(vendor.address)
         .then(response => {
             const html = response.data
             const $ = cheerio.load(html)
@@ -25,10 +25,10 @@ newspapers.forEach(newspaper => {
                 const title = $(this).text()
                 const url = $(this).attr('href')
 
-                articles.push({
+                laptops.push({
                     title,
-                    url: newspaper.base + url,
-                    source: newspaper.name
+                    url: vendor.base + url,
+                    source: vendor.name
                 })
             })
 
@@ -36,36 +36,36 @@ newspapers.forEach(newspaper => {
 })
 
 app.get('/', (req, res) => {
-    res.json('Welcome to my Cyber News API')
+    res.json('Welcome to my Cyber laptop API')
 })
 
-app.get('/news', (req, res) => {
-    res.json(articles)
+app.get('/laptop', (req, res) => {
+    res.json(laptops)
 })
 
-app.get('/news/:newspaperId', (req, res) => {
-    const newspaperId = req.params.newspaperId
+app.get('/laptop/:vendorId', (req, res) => {
+    const vendorId = req.params.vendorId
 
-    const newspaperAddress = newspapers.filter(newspaper => newspaper.name == newspaperId)[0].address
-    const newspaperBase = newspapers.filter(newspaper => newspaper.name == newspaperId)[0].base
+    const vendorAddress = vendors.filter(vendor => vendor.name == vendorId)[0].address
+    const vendorBase = vendors.filter(vendor => vendor.name == vendorId)[0].base
 
 
-    axios.get(newspaperAddress)
+    axios.get(vendorAddress)
         .then(response => {
             const html = response.data
             const $ = cheerio.load(html)
-            const specificArticles = []
+            const specificlaptops = []
 
             $('a:contains("cyber")', html).each(function () {
                 const title = $(this).text()
                 const url = $(this).attr('href')
-                specificArticles.push({
+                specificlaptops.push({
                     title,
-                    url: newspaperBase + url,
-                    source: newspaperId
+                    url: vendorBase + url,
+                    source: vendorId
                 })
             })
-            res.json(specificArticles)
+            res.json(specificlaptops)
         }).catch(err => console.log(err))
 })
 
